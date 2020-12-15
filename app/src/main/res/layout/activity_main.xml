@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:background="#ff0000"
+        android:layout_height="match_parent">
+        <FrameLayout
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="300dp" />
+        <Button
+            android:text="btn1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="10dp"
+            android:id="@+id/btn1"
+            app:layout_constraintTop_toBottomOf="@+id/container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:text="btn2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="10dp"
+            android:id="@+id/btn2"
+            app:layout_constraintTop_toBottomOf="@+id/btn1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:text="btn3"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="10dp"
+            android:id="@+id/btn3"
+            app:layout_constraintTop_toBottomOf="@+id/btn2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
