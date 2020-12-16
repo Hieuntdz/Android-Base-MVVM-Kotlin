@@ -5,7 +5,7 @@ import androidx.fragment.app.FragmentManager
 class FragmentController<T : BaseFragment<*>> {
     private var layoutId: Int = 0
     private lateinit var fragmentManager: FragmentManager
-    private lateinit var fragmentList: MutableList<T>
+    private var fragmentList: MutableList<T> = mutableListOf()
     private var currentFragment: T? = null
 
     constructor(fragmentManager: FragmentManager, layoutId: Int) {
@@ -13,15 +13,26 @@ class FragmentController<T : BaseFragment<*>> {
         this.layoutId = layoutId
     }
 
+    fun getCurrentFragment() : T? = currentFragment
+
     fun addFragment(fragment: T, data: HashMap<String, Any>?) {
         if (currentFragment?.javaClass?.name.equals(fragment.javaClass.name)) {
             return
         }
         data?.let { fragment.setData(it) }
-        fragmentManager.beginTransaction().add(layoutId, fragment)
-            .addToBackStack(fragment.javaClass.name).commit()
+        fragmentManager.beginTransaction().add(layoutId, fragment).commit()
         currentFragment = fragment
         fragmentList.add(fragment)
+    }
+
+    fun addFragmentToBackStack(fragment: T, data: HashMap<String, Any>?) {
+        if (currentFragment?.javaClass?.name.equals(fragment.javaClass.name)) {
+            return
+        }
+        data?.let { fragment.setData(it) }
+        currentFragment = fragment
+        fragmentList.add(fragment)
+        fragmentManager.beginTransaction().add(layoutId, fragment).addToBackStack(fragment.javaClass.name).commit()
     }
 
     fun replaceFragment(fragment: T, data: HashMap<String, Any>?) {
@@ -30,16 +41,10 @@ class FragmentController<T : BaseFragment<*>> {
         }
 
         data?.let { fragment.setData(it) }
-        val fragmentPopped =
-            fragmentManager.popBackStackImmediate(currentFragment?.javaClass?.name, 0)
-        if (!fragmentPopped) {
-            fragmentManager.beginTransaction().replace(layoutId, fragment)
-                .addToBackStack(fragment.javaClass.name).commit()
-        }else{
-            fragmentList.remove(fragment)
-            currentFragment = fragment
-            fragmentList.add(fragment)
-            addFragment(fragment,data)
-        }
+
+        fragmentList.remove(currentFragment)
+        currentFragment = fragment
+        fragmentList.add(fragment)
+        fragmentManager.beginTransaction().replace(layoutId, fragment).commit()
     }
 }

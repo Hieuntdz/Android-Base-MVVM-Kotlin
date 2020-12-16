@@ -28,7 +28,11 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        (supportFragmentManager.findFragmentById(layoutId()) as BaseFragment<*>).onBackPress()
+
+        //TODO check lại đoạn này nếu dùng add to back stack. méo hiểu sao add 3 fragment mà backs tack chỉ có 2
+        if(fragmentController?.getCurrentFragment()!= null){
+            (supportFragmentManager.findFragmentById(fragmentContainerId()) as BaseFragment<*>).onBackPress()
+        }
     }
 
     protected fun checkDoubleClick(): Boolean {

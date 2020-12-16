@@ -9,6 +9,7 @@ class Define {
 
 class AppSharePres {
     companion object {
-        const val SHARE_PRES_NAME = "app_share_pres_name"
+        const val SHARE_PRES_NAME = "SHARE_PRES_NAME"
+        const val IS_ALREADY_LOGIN ="IS_ALREADY_LOGIN"
     }
 }
