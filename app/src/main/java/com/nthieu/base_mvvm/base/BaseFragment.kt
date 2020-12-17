@@ -8,20 +8,22 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import com.nthieu.base_mvvm.R
+import com.nthieu.base_mvvm.data.network.NetworkCheckerInterceptor
+import com.nthieu.base_mvvm.utils.DialogUtils
+import com.nthieu.base_mvvm.utils.Helper
+import com.nthieu.base_mvvm.utils.Logger
+import retrofit2.HttpException
 import java.io.Serializable
+import java.lang.Exception
 import java.util.*
-import javax.inject.Inject
 
 abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
 
     abstract fun layoutId(): Int
     open fun onBackPress() {}
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    private lateinit var binding : T
+    protected lateinit var binding : T
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,6 +35,7 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
     }
 
     fun setData(data: HashMap<String, Any>) {
+
         if (data.isEmpty()) {
             arguments = Bundle()
             return
@@ -50,6 +53,49 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
                 is Serializable -> bundle.putSerializable(key, value)
             }
         }
+    }
+
+    fun showLoading(){
+        DialogUtils.showLoadingDialog(context)
+    }
+
+    fun hideLoading(){
+        DialogUtils.hideDialogLoading()
+    }
+
+    fun handleNetworkError(throwable: Throwable, isShowDialog: Boolean) {
+
+        var errMessage = ""
+
+        when (throwable) {
+            is NetworkCheckerInterceptor.NoConnectivityException -> {
+                errMessage = getString(R.string.no_internet)
+                showNoInternetMessage(message = errMessage)
+            }
+            is HttpException -> {
+                errMessage = try {
+                    Logger.debug("Request Error ", throwable.response().toString())
+                    getString(R.string.an_error_excuse)
+                } catch (e: Exception) {
+                    getString(R.string.request_timeout)
+                }
+            }
+            else -> {
+                errMessage = getString(R.string.request_timeout)
+            }
+        }
+
+        if (isShowDialog && errMessage.isNotEmpty()) {
+            showSnackBar(errMessage)
+        }
+    }
+
+    private fun showNoInternetMessage(message: String) {
+        showSnackBar(message)
+    }
+
+    private fun showSnackBar(message: String) {
+        binding.root.let { Helper.showLongSnackBar(it, message) }
     }
 
 }

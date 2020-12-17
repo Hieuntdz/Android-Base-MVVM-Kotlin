@@ -11,6 +11,7 @@ class Logger {
         private val level = LoggerType.DEBUG.ordinal
         const val tag = "Reader ConsoleLog"
         fun debug(tag: String, msg: String) = log(LoggerType.DEBUG, tag, msg)
+        fun debug(msg: String) = log(LoggerType.DEBUG, tag, msg)
         fun info(tag: String, msg: String) = log(LoggerType.INFO, tag, msg)
         fun error(tag: String, msg: String) = log(LoggerType.ERROR, tag, msg)
         fun warning(tag: String, msg: String) = log(LoggerType.WARNING, tag, msg)

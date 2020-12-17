@@ -2,20 +2,15 @@ package com.nthieu.base_mvvm.base
 
 import androidx.fragment.app.FragmentManager
 
-class FragmentController<T : BaseFragment<*>> {
-    private var layoutId: Int = 0
-    private lateinit var fragmentManager: FragmentManager
+class FragmentController<T : BaseFragment<*>>(
+    private var fragmentManager: FragmentManager
+) {
     private var fragmentList: MutableList<T> = mutableListOf()
     private var currentFragment: T? = null
 
-    constructor(fragmentManager: FragmentManager, layoutId: Int) {
-        this.fragmentManager = fragmentManager
-        this.layoutId = layoutId
-    }
-
     fun getCurrentFragment() : T? = currentFragment
 
-    fun addFragment(fragment: T, data: HashMap<String, Any>?) {
+    fun addFragment(fragment: T, data: HashMap<String, Any>?, layoutId:Int) {
         if (currentFragment?.javaClass?.name.equals(fragment.javaClass.name)) {
             return
         }
@@ -25,7 +20,7 @@ class FragmentController<T : BaseFragment<*>> {
         fragmentList.add(fragment)
     }
 
-    fun addFragmentToBackStack(fragment: T, data: HashMap<String, Any>?) {
+    fun addFragmentToBackStack(fragment: T, data: HashMap<String, Any>?, layoutId:Int) {
         if (currentFragment?.javaClass?.name.equals(fragment.javaClass.name)) {
             return
         }
@@ -35,7 +30,7 @@ class FragmentController<T : BaseFragment<*>> {
         fragmentManager.beginTransaction().add(layoutId, fragment).addToBackStack(fragment.javaClass.name).commit()
     }
 
-    fun replaceFragment(fragment: T, data: HashMap<String, Any>?) {
+    fun replaceFragment(fragment: T, data: HashMap<String, Any>?, layoutId:Int) {
         if (currentFragment?.javaClass?.name.equals(fragment.javaClass.name)) {
             return
         }

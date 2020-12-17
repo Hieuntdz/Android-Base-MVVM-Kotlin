@@ -1,25 +1,54 @@
 package com.nthieu.base_mvvm.data
 
 import android.content.SharedPreferences
+import androidx.room.RoomDatabase
+import com.nthieu.base_mvvm.data.local.AppRoomDatabase
+import com.nthieu.base_mvvm.data.model.LoginResponse
 import com.nthieu.base_mvvm.data.network.ApiInterface
-import com.nthieu.base_mvvm.utils.AppSharePres
-import com.nthieu.base_mvvm.utils.Define
-import javax.inject.Inject
-import javax.inject.Singleton
+import com.nthieu.base_mvvm.utils.DefineAppSharePres
+import com.nthieu.base_mvvm.utils.DefineRoomDataBase
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.schedulers.Schedulers
 
-@Singleton
-class Repository {
-    var apiInterface: ApiInterface
-    var sharePres: SharedPreferences
 
-    @Inject
-    constructor(apiInterface: ApiInterface, sharePres: SharedPreferences) {
+object Repository {
+    private lateinit var sharePres: SharedPreferences
+    private lateinit var apiInterface: ApiInterface
+    private lateinit var localDataBase: AppRoomDatabase
+    private lateinit var editor: SharedPreferences.Editor
+
+
+    fun setSharedPreferences(sharedPreferences: SharedPreferences) {
+        this.sharePres = sharedPreferences
+        this.editor = sharedPreferences.edit()
+    }
+
+    fun setApiInterface(apiInterface: ApiInterface) {
         this.apiInterface = apiInterface
-        this.sharePres = sharePres
     }
 
-    fun isAlreadyLogin(): Boolean {
-        return sharePres.getBoolean(AppSharePres.IS_ALREADY_LOGIN,false)
+    fun setRoomDataBase(database: AppRoomDatabase) {
+        this.localDataBase = database
     }
 
+    fun getAccessToken(): String {
+        return sharePres.getString(DefineAppSharePres.ACCESS_TOKEN, "")!!
+    }
+
+    fun saveAccessToken(accessToken: String) {
+        editor.putString(DefineAppSharePres.ACCESS_TOKEN, accessToken)
+    }
+
+    fun login(userName: String, passWord: String): Single<LoginResponse>? {
+        return apiInterface.login()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun getHomeData(accessToken: String): Single<LoginResponse>? {
+        return apiInterface.login()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
 }

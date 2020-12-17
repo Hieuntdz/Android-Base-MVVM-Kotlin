@@ -16,11 +16,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
 
     override fun layoutId(): Int {
-      return R.layout.activity_main
+        return R.layout.activity_main
     }
 
     override fun fragmentContainerId(): Int {
-       return R.id.container
+        return R.id.container
     }
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
@@ -28,8 +28,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     override fun initView() {
-        fragmentController?.addFragment(SplashFragment(),null)
-    }
+        fragmentController?.addFragment(SplashFragment(),null,fragmentContainerId())
 
+    }
 
 }

@@ -31,4 +31,8 @@ ext{
     glide_version = '4.8.0'
     gson_version='2.8.6'
     lifecycle_version = "2.2.0"
+    rxandroid_version ="3.0.0"
+    rxkotlin_version ="2.3.0"
+    rxjava_version = "3.0.0"
+    room_version = "2.2.6"
 }
