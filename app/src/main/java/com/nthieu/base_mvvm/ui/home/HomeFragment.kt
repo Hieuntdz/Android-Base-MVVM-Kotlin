@@ -1,5 +1,12 @@
 package com.nthieu.base_mvvm.ui.home
 
+/**
+ * Aitruck
+ * Created by Nguyen Trung Hieu on 1/18/2021.
+ * Phone, telegram : 0372.810.001.
+ * Email : nthieuhpcntt@gmail.com
+ */
+
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
@@ -15,7 +22,6 @@ import com.nthieu.base_mvvm.databinding.FragmentHomeBinding
 import com.nthieu.base_mvvm.ui.MainActivity
 import com.nthieu.base_mvvm.utils.DefineResponseStatus
 import com.nthieu.base_mvvm.utils.Logger
-
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     val TAG = HomeFragment::class.java.name

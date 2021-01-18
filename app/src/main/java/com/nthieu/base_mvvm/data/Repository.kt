@@ -1,5 +1,12 @@
 package com.nthieu.base_mvvm.data
 
+/**
+ * Aitruck
+ * Created by Nguyen Trung Hieu on 1/18/2021.
+ * Phone, telegram : 0372.810.001.
+ * Email : nthieuhpcntt@gmail.com
+ */
+
 import android.content.SharedPreferences
 import androidx.room.RoomDatabase
 import com.nthieu.base_mvvm.data.local.AppRoomDatabase
@@ -10,7 +17,6 @@ import com.nthieu.base_mvvm.utils.DefineRoomDataBase
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
-
 
 object Repository {
     private lateinit var sharePres: SharedPreferences

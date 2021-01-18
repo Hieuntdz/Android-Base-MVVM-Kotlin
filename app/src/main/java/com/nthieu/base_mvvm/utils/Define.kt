@@ -1,5 +1,12 @@
 package com.nthieu.base_mvvm.utils
 
+/**
+ * Aitruck
+ * Created by Nguyen Trung Hieu on 1/18/2021.
+ * Phone, telegram : 0372.810.001.
+ * Email : nthieuhpcntt@gmail.com
+ */
+
 class Define {
     companion object {
         const val DEFAULT_TIMEOUT = 60L

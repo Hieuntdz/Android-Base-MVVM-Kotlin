@@ -1,5 +1,12 @@
 package com.nthieu.base_mvvm.ui.home
 
+/**
+ * Aitruck
+ * Created by Nguyen Trung Hieu on 1/18/2021.
+ * Phone, telegram : 0372.810.001.
+ * Email : nthieuhpcntt@gmail.com
+ */
+
 import androidx.lifecycle.MutableLiveData
 import com.nthieu.base_mvvm.base.BaseObjectResponse
 import com.nthieu.base_mvvm.base.BaseViewModel
